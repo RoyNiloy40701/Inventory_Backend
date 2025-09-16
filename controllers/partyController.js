@@ -1,5 +1,4 @@
 //partyController.js
-
 const Party = require('../models/Party');
 const mongoose = require('mongoose');
 
@@ -12,7 +11,6 @@ exports.getAllParties = async (req, res) => {
     res.status(500).json({ message: 'Server error' });
   }
 };
-
 
 exports.addParty = async (req, res) => {
   try {
