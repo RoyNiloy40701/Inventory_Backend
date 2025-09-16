@@ -1,8 +1,9 @@
-const Product = require('../models/Product');
+
 const mongoose = require('mongoose');
 const fs = require('fs');
 const path = require('path');
 const Stock = require('../models/Stock');
+const Product = require('../models/product');
 
 
 // helper: delete a file if exists
