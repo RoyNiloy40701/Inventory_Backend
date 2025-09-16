@@ -1,11 +1,11 @@
 const Customer = require('../models/Customer');
-const Quotation = require('../models/Quotation');
+const Quotation = require('../models/quotation');
 const QuotationProduct = require('../models/QuotationProduct');
 const generateSerialId = require('../utils/generateSerialId');
 
 exports.getAllQuotation = async (req, res) => {
   try {
-    const quotations = await Quotation.find().sort({ regdate: -1 });
+    const quotations = await quotation.find().sort({ regdate: -1 });
     const quotationsWithProducts = await Promise.all(
       quotations.map(async (quotation) => {
         const quotationProducts = await QuotationProduct.find({
