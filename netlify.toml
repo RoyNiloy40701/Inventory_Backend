@@ -1,6 +1,7 @@
 [build]
   functions = "netlify/functions"
-  publish = "public"
+  publish = "public" # only if you have a frontend
+
 
 [[redirects]]
   from = "/*"
