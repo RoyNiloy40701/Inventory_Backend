@@ -41,7 +41,6 @@ app.use(cors({
 
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
-
 //Routes
 app.use('/api/auth', userRoutes);
 app.use('/api/roles', roleRoutes);
