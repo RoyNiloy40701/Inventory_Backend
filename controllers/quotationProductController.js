@@ -1,4 +1,5 @@
-const Product = require('../models/Product');
+
+const Product = require('../models/product');
 const QuotationProduct = require('../models/QuotationProduct');
 
 exports.getAllQuotationProduct = async (req, res) => {
