@@ -1,11 +1,12 @@
 //sale controller
 const Customer = require("../models/Customer");
-const Product = require("../models/Product");
+
 const Sale = require("../models/Sale");
 const SaleProduct = require("../models/SaleProduct");
 const generateSerialId = require("../utils/generateSerialId");
 const { default: mongoose } = require("mongoose");
 const { getAccountModel } = require("../helper/AccountHelper");
+const Product = require("../models/product");
 
 exports.getAllSale = async (req, res) => {
   try {
@@ -42,7 +43,7 @@ exports.getAllSale = async (req, res) => {
         return {
           ...sale.toObject(),
           products: productsWithName,
-            totalPurchasePrice,
+          totalPurchasePrice,
           customerName: customer ? customer?.customerName : null,
           cMobile: customer ? customer?.mobile : null,
           cAddress: customer ? customer?.address : null,
