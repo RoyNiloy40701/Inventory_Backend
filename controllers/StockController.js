@@ -15,6 +15,7 @@ exports.stockIn = async (req, res) => {
       stock.regby = regby;
     }
     await stock.save();
+
     res.status(200).json({ message: 'Stock In successful', stock });
   } catch (error) {
     res.status(400).json({ message: error.message })
@@ -87,13 +88,13 @@ exports.getAllStock = async (req, res) => {
     const enrichedStocks = await Promise.all(
       stocks.map(async (stock) => {
         const totalPurchased = await PurchaseProduct.aggregate([
-          {
-            $match: {
+          { 
+            $match: { 
               productID: stock.productID.toString() // ✅ fix: convert ObjectId → string
-            }
+            } 
           },
-          {
-            $group: { _id: null, total: { $sum: "$quantity" } }
+          { 
+            $group: { _id: null, total: { $sum: "$quantity" } } 
           },
         ]);
 

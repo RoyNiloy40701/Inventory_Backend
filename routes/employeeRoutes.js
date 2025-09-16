@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { protect } = require('../middlewares/authMiddleware.js');
-const { getAllEmployee, createEmployee, updateEmployee, deleteEmployee, getEmployeeById } = require('../controllers/employeeController.js');
+const { getAllEmployee, getEmployeeById, createEmployee, updateEmployee, deleteEmployee } = require('../controllers/EmployeeController.js');
 
 
 

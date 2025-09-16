@@ -34,13 +34,10 @@ const quotationRoutes = require('./routes/quotationRoutes');
 const app = express();
 const path = require('path');
 app.use(express.json());
-app.use(cors({
-  origin: process.env.FRONTEND_URL || "*",
-  credentials: true
-}));
-const PORT = process.env.PORT || 3000;
+app.use(cors({ origin: 'http://localhost:5173', credentials: true }));
 
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
 
 //Routes
 app.use('/api/auth', userRoutes);
