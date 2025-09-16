@@ -6,12 +6,10 @@ const generateSerialId = require('../utils/generateSerialId');
 exports.getAllQuotation = async (req, res) => {
   try {
     const quotations = await Quotation.find().sort({ regdate: -1 });
-
     const quotationsWithProducts = await Promise.all(
       quotations.map(async (quotation) => {
         const quotationProducts = await QuotationProduct.find({
-          qutid: quotation._id,
-
+          qutid: quotation._id
         });
         const customer = await Customer.findOne({
           _id: quotation.customerID,
