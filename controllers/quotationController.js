@@ -1,5 +1,5 @@
 const Customer = require('../models/Customer');
-const Quotation = require('../models/quotation');
+const Quotation = require('../models/Quotation');
 const QuotationProduct = require('../models/QuotationProduct');
 const generateSerialId = require('../utils/generateSerialId');
 
