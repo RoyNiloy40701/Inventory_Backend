@@ -1,6 +1,7 @@
 //partyController.js
-const Party = require('../models/Party');
+
 const mongoose = require('mongoose');
+const Party = require('../models/party');
 
 exports.getAllParties = async (req, res) => {
   try {
