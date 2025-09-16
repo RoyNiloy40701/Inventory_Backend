@@ -1,9 +1,10 @@
 {
   "name": "backend",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "netlify/functions/server.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node netlify/functions/server.js",
+    "build": "echo 'No build needed for Node.js functions'"
   },
   "keywords": [],
   "author": "",
