@@ -38,6 +38,10 @@ app.use(cors({ origin: 'http://localhost:5173', credentials: true }));
 
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
+app.use((req, res, next) => {
+  res.setHeader('Referrer-Policy', 'no-referrer'); // or 'same-origin'
+  next();
+});
 
 //Routes
 app.use('/api/auth', userRoutes);
