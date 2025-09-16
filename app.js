@@ -38,6 +38,7 @@ app.use(cors({
   origin: process.env.FRONTEND_URL || "*",
   credentials: true
 }));
+const PORT = process.env.PORT || 3000;
 
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
