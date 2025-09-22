@@ -34,7 +34,7 @@ const quotationRoutes = require('./routes/quotationRoutes');
 const app = express();
 const path = require('path');
 app.use(express.json());
-app.use(cors({ origin: 'https://inventory-ten-rose-40.vercel.app', credentials: true }));
+app.use(cors({ origin: 'https://inventory-demo67.vercel.app', credentials: true }));
 
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
