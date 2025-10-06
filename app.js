@@ -38,7 +38,7 @@ app.use(express.json());
 app.use(
   cors({
     origin: [
-      "https://inventory-ten-rose-40.vercel.app",
+      "https://inventory-demo67.vercel.app",
       "http://localhost:5173",
 
     ],
