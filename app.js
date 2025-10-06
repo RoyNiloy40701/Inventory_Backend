@@ -60,7 +60,6 @@ app.use('/api/voucher', voucherRoutes);
 app.use('/api/particularVoucher', particularVoucherRoutes);
 app.use('/api/quotationProduct', quotationProductRoutes);
 app.use('/api/sale/payment', salePaymentRoutes);
-
 app.use('/api/customer', customerRoutes);
 app.use('/api/product', productRoutes);
 app.use('/api/party', partyRoutes);
