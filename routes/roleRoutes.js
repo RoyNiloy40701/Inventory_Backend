@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { protect } = require('../middlewares/authMiddleware.js');
-const { getRoleById, createRole, updateRole, deleteRole, getAllRole } = require('../controllers/roleController.js');
+const { getAllRole, createRole, getRoleById, updateRole, deleteRole } = require('../controllers/roleController.js');
 
 
 //Role route
