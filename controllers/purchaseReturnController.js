@@ -2,7 +2,7 @@ const PurchaseReturn = require('../models/PurchaseReturn');
 const Purchase = require('../models/Purchase');
 const PurchaseProduct = require('../models/PurchaseProduct');
 const Supplier = require('../models/Supplier');
-const PurchaseReturnProduct = require('../models/purchaseReturnProduct');
+const PurchaseReturnProduct = require('../models/PurchaseReturnProduct'); 
 const { getAccountModel } = require("../helper/AccountHelper");
 
 // Helper function: get purchase info by ID (same as getPurchaseById)
@@ -160,7 +160,7 @@ exports.getAllPurchaseReturn = async (req, res) => {
 }
 
 exports.getPurchaseReturnById = async (req, res) => {
-  try {
+    try {
     const purchaseReturn = await PurchaseReturn.findById(req.params.id);
     if (!purchaseReturn) {
       return res.status(404).json({ message: "Purchase Return Not Found" });

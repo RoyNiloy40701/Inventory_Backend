@@ -4,17 +4,14 @@ const mongoose = require('mongoose');
 const saleReturnSchema = new mongoose.Schema(
   {
     compid: { type: String, required: true, maxlength: 30 },
-    cust_id: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Customer",
-      required: true,
-    },
-    rid: { type: String, default: null, maxlength: 50 },
+    cust_id: {type: String, required: true, maxlength: 30 },
+    returnDate: { type: Date, required: true },
     invoice: { type: String, required: true, maxlength: 50 },
+    return_invoice: { type: String, required: true, maxlength: 50 },
     totalPrice: { type: Number, required: true },
     paidAmount: { type: Number, required: true },
-    scharge: { type: String, required: true, maxlength: 50 },
-    sctype: { type: String, required: true, maxlength: 50 },
+    scharge: { type: String, default: null, maxlength: 50 },
+    sctype: { type: String, default: null, maxlength: 50 },
     scAmount: { type: Number, default: null },
     accountType: { type: String, default: null, maxlength: 50 },
     accountNo: { type: String, default: null },

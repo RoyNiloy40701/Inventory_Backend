@@ -1,7 +1,7 @@
 //partyController.js
 
+const Party = require('../models/Party');
 const mongoose = require('mongoose');
-const Party = require('../models/party');
 
 exports.getAllParties = async (req, res) => {
   try {
@@ -12,6 +12,8 @@ exports.getAllParties = async (req, res) => {
     res.status(500).json({ message: 'Server error' });
   }
 };
+
+
 exports.addParty = async (req, res) => {
   try {
     // Accept regdate and update from frontend, or set defaults

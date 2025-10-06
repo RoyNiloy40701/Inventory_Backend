@@ -6,12 +6,14 @@ const {
   getSaleProductById,
   createSaleProduct,
   updateSaleProduct,
-  deleteSaleProduct
+  deleteSaleProduct,
+  updateSaleProductReturnQty
 } = require('../controllers/saleProductController.js');
 
 
 router.get('/all_saleProduct', getAllSaleProducts);
 router.post('/saleProduct', protect, createSaleProduct);
+router.put("/:id/return", updateSaleProductReturnQty);
 router.get('/saleProduct/:id', protect, getSaleProductById);
 router.put('/saleProduct/:id', protect, updateSaleProduct);
 router.delete('/saleProduct/:id', protect, deleteSaleProduct);

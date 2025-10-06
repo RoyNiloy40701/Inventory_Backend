@@ -1,12 +1,13 @@
 //sale controller
 const Customer = require("../models/Customer");
-
+const Product = require("../models/Product");
 const Sale = require("../models/Sale");
 const SaleProduct = require("../models/SaleProduct");
 const generateSerialId = require("../utils/generateSerialId");
 const { default: mongoose } = require("mongoose");
 const { getAccountModel } = require("../helper/AccountHelper");
-const Product = require("../models/product");
+const PurchaseProduct = require("../models/PurchaseProduct");
+const Purchase = require("../models/Purchase");
 
 exports.getAllSale = async (req, res) => {
   try {
@@ -57,7 +58,6 @@ exports.getAllSale = async (req, res) => {
   }
 };
 
-
 exports.getAllSaleProductWise = async (req, res) => {
   try {
     const { reportType, startDate, endDate, month, year } = req.query;
@@ -85,67 +85,65 @@ exports.getAllSaleProductWise = async (req, res) => {
 
     const products = await Product.find();
 
-    let grandTotalQty = 0;
-    let grandTotalSaleAmount = 0;
-    let grandTotalPurchaseAmount = 0;
+    // 👉 First, get all sales in range
+    const salesInRange = await Sale.find({
+      regdate: { $gte: start, $lte: end },
+    });
+    const saleIDs = salesInRange.map((s) => s._id.toString());
 
-    const productWithSales = await Promise.all(
+    const productWithStats = await Promise.all(
       products.map(async (prod) => {
-        // Find all sale products for this product in the date range
-        const saleProducts = await SaleProduct.find({ productID: prod._id }).populate({
-          path: "saleID",
-          match: { regdate: { $gte: start, $lte: end } },
+        // --- Purchases ---
+        const purchasesInRange = await Purchase.find({
+          regdate: { $gte: start, $lte: end },
         });
+        const purchaseIDs = purchasesInRange.map((p) => p._id.toString());
 
-        const filteredSaleProducts = saleProducts.filter(sp => sp.saleID);
+        const purchaseProducts = await PurchaseProduct.find({
+          productID: prod._id,
+          purchaseID: { $in: purchaseIDs },
+        });
+        const totalPurchaseQty = purchaseProducts.reduce(
+          (acc, pp) => acc + (pp.quantity || 0),
+          0
+        );
 
-        const totalQty = filteredSaleProducts.reduce(
+        // --- Sales ---
+        const saleProducts = await SaleProduct.find({
+          productID: prod._id,
+          saleID: { $in: saleIDs },
+        });
+        const totalSaleQty = saleProducts.reduce(
           (acc, sp) => acc + (sp.quantity || 0),
           0
         );
-
-        const totalSaleAmount = filteredSaleProducts.reduce(
-          (acc, sp) => acc + (sp.quantity || 0) * (sp.salePrice || 0),
+        const totalSaleAmount = saleProducts.reduce(
+          (acc, sp) => acc + (sp.quantity || 0) * (sp.sPrice || 0),
           0
         );
-
-        const totalPurchaseAmount = filteredSaleProducts.reduce(
-          (acc, sp) => acc + (sp.quantity || 0) * (prod.pprice || 0),
-          0
-        );
-
-        grandTotalQty += totalQty;
-        grandTotalSaleAmount += totalSaleAmount;
-        grandTotalPurchaseAmount += totalPurchaseAmount;
 
         return {
           productId: prod._id,
           productName: prod.productName,
           pprice: prod.pprice,
           sprice: prod.sprice,
-          totalQtySold: totalQty,
-          totalSaleAmount: totalSaleAmount,
-          totalPurchaseAmount: totalPurchaseAmount,
+          totalPurchaseQty,
+          totalSaleQty,
+          totalSaleAmount,
+          totalPurchaseAmountForSoldItems: totalSaleQty * (prod.pprice || 0),
+          profit: totalSaleAmount - totalSaleQty * (prod.pprice || 0),
         };
       })
     );
 
-    // Sort products by totalSaleAmount descending
-    productWithSales.sort((a, b) => b.totalSaleAmount - a.totalSaleAmount);
+    // ✅ Now sorting will work correctly
+    productWithStats.sort((a, b) => b.totalSaleAmount - a.totalSaleAmount);
 
-    res.status(200).json({
-      data: productWithSales,
-      totals: {
-        grandTotalQty,
-        grandTotalSaleAmount,
-        grandTotalPurchaseAmount,
-      },
-    });
+    res.status(200).json({ data: productWithStats });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 };
-
 
 exports.createSale = async (req, res) => {
   const session = await mongoose.startSession();
@@ -247,7 +245,6 @@ exports.updateSale = async (req, res) => {
     if (!sale) {
       return res.status(404).json({ message: "Sale Not Found" });
     }
-
     if (req.body.accountType && req.body.accountNo) {
       await getAccountModel(req.body.accountType).findByIdAndUpdate(
         req.body.accountNo,

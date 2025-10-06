@@ -59,16 +59,6 @@ exports.createRole = async (req, res) => {
 }
 
 
-// exports.getAllRole = async (req, res) => {
-//   try {
-//     const role = await Role.find().sort({ regdate: -1 })
-//     res.status(200).json({ data: role })
-
-//   } catch (error) {
-//     res.status(500).json({ message: error.message });
-//   }
-// }
-
 exports.getRoleById = async (req, res) => {
   try {
     const role = await Role.findById(req.params.id)

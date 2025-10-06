@@ -72,6 +72,33 @@ exports.updateSaleProduct = async (req, res) => {
   }
 }
 
+// Update returnQty of a SaleProduct
+exports.updateSaleProductReturnQty = async (req, res) => {
+  try {
+    const { id } = req.params;  // SaleProduct _id
+    const { returnQty } = req.body;
+
+    if (returnQty === undefined) {
+      return res.status(400).json({ message: "returnQty is required" });
+    }
+
+    // Find and update
+    const saleProduct = await SaleProduct.findByIdAndUpdate(
+      id,
+      { $set: { returnQty } }, // only update returnQty
+      { new: true, runValidators: true }
+    );
+
+    if (!saleProduct) {
+      return res.status(404).json({ message: "SaleProduct Not Found" });
+    }
+
+    res.status(200).json({ message: "Return quantity updated", data: saleProduct });
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+};
+
 // DELETE a sale product by ID
 exports.deleteSaleProduct = async (req, res) => {
   const id = req.params.id;

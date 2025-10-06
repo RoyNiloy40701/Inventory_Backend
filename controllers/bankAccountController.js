@@ -1,4 +1,6 @@
-const BankAccount = require('../models/BankAccount')
+const BankAccount = require('../models/BankAccount');
+const Purchase = require('../models/Purchase');
+const Sale = require('../models/Sale');
 
 exports.createBankAccount = async (req, res) => {
   try {
@@ -54,3 +56,31 @@ exports.deleteBankAccount = async (req, res) => {
     res.status(500).json({ message: error.message })
   }
 }
+
+exports.getBankTransactions = async (req, res) => {
+  try {
+    const bankSales = await Sale.find({ accountType: "Bank" });
+    const bankPurchases = await Purchase.find({ accountType: "Bank" });
+
+
+     const salesWithType = bankSales.map(sale => ({
+      ...sale.toObject(),
+      type: "Sale"
+    }));
+
+    const purchasesWithType = bankPurchases.map(purchase => ({
+      ...purchase.toObject(),
+      type: "Purchase"
+    }));
+
+    const combined = [...salesWithType, ...purchasesWithType];
+    res.status(200).json({
+      data: combined
+    });
+
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+};
+
+// { accountType: "Bank" }

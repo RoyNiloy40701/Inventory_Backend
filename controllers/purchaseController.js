@@ -1,6 +1,5 @@
 const { getAccountModel } = require("../helper/AccountHelper");
-const Product = require("../models/product");
-
+const Product = require("../models/Product");
 const Purchase = require("../models/Purchase");
 const PurchaseProduct = require("../models/PurchaseProduct");
 const Supplier = require("../models/Supplier");

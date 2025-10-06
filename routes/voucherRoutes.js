@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router();
 const { protect } = require('../middlewares/authMiddleware');
-const { getAllVoucher, createVoucher, updateVoucher, deleteVoucher, getVoucherById } = require('../controllers/voucherController');
+const { getAllVoucher, createVoucher, getVoucherById, updateVoucher, deleteVoucher } = require('../controllers/voucherController');
 
 
 //Department Route

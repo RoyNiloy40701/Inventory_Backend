@@ -22,7 +22,8 @@ const saleProductSchema = new mongoose.Schema(
     quantity: { type: Number, default: null },
     totalPrice: { type: Number, default: null },
     regby: { type: String, required: true },
-    upby: { type: String, default: null }
+    upby: { type: String, default: null },
+    returnQty: { type: Number, default: 0 },
   },
   {
     timestamps: { createdAt: 'regdate', updatedAt: 'update' }

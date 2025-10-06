@@ -1,5 +1,5 @@
 // purchase return controller.js
-const PurchaseReturnProduct = require('../models/purchaseReturnProduct');
+const PurchaseReturnProduct = require('../models/PurchaseReturnProduct');
 
 // Create one or multiple PurchaseReturnProduct entries
 exports.createPurchaseReturnProduct = async (req, res) => {

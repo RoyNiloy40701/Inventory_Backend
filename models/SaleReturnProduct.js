@@ -1,3 +1,5 @@
+const mongoose = require("mongoose");
+
 const saleReturnProductSchema = new mongoose.Schema(
   {
     saleReturnID: {

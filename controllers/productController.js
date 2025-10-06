@@ -1,9 +1,8 @@
-
+const Product = require('../models/Product');
 const mongoose = require('mongoose');
 const fs = require('fs');
 const path = require('path');
 const Stock = require('../models/Stock');
-const Product = require('../models/product');
 
 
 // helper: delete a file if exists
@@ -37,7 +36,7 @@ exports.getAllProducts = async (req, res) => {
     // Attach stock quantity to each product
     const productsWithStock = await Promise.all(
       products.map(async (product) => {
-        const stock = await Stock.findOne({ productID: product._id, compid: product.compid });
+        const stock = await Stock.findOne({ productID: product._id, });
         const quantity = stock ? (stock.totalPices - stock.dtquantity) : 0;
         return {
           ...product.toObject(),

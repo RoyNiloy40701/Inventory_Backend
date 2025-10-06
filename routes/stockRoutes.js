@@ -1,8 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { protect } = require('../middlewares/authMiddleware.js');
-const { getAllStock, stockIn, stockOut, stockAdjust } = require('../controllers/StockController.js');
-
+const { stockAdjust, stockIn, stockOut, getAllStock } = require('../controllers/stockController.js');
 
 
 
